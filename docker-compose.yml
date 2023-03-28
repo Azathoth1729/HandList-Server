@@ -1,0 +1,22 @@
+services:
+  handlist_db:
+    container_name: handlist_postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: marisa
+      POSTGRES_PASSWORD: pwd
+      PGDATA: /data/postgres
+    volumes:
+      - handlist_db:/data/postgres
+    ports:
+      - "5332:5432"
+    networks:
+      - handlist_db
+    restart: unless-stopped
+
+networks:
+  handlist_db:
+    driver: bridge
+
+volumes:
+  handlist_db:
