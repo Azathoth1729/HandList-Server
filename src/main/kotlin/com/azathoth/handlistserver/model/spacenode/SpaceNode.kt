@@ -14,7 +14,4 @@ class SpaceNode(
 
     @Enumerated(EnumType.STRING)
     var nodetype: SpaceNodeType = SpaceNodeType.List,
-
-//    @OneToMany(mappedBy = "spaceNode",cascade = [CascadeType.ALL], targetEntity = Task::class)
-//    var tasks: MutableSet<Task> = mutableSetOf()
 )

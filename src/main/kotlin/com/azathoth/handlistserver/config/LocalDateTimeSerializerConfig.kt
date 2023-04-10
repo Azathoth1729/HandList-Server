@@ -29,7 +29,7 @@ class LocalDateTimeSerializerConfig {
 
     @Bean
     fun jackson2ObjectMapperBuilderCustomizer(): Jackson2ObjectMapperBuilderCustomizer {
-        return Jackson2ObjectMapperBuilderCustomizer { builder: Jackson2ObjectMapperBuilder ->
+        return Jackson2ObjectMapperBuilderCustomizer { builder ->
             builder.serializerByType(
                 LocalDateTime::class.java, localDateTimeSerializer()
             )

@@ -23,7 +23,7 @@ class Task(
     var status: Status = Status.Todo,
 
     var description: String = "",
-    val createTime: LocalDate = LocalDate.now(),
+    var createTime: LocalDate = LocalDate.now(),
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     var startTime: LocalDate? = null,

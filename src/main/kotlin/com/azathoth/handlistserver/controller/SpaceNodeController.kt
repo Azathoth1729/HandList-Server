@@ -1,6 +1,6 @@
 package com.azathoth.handlistserver.controller
 
-import com.azathoth.handlistserver.AppConfig.API_VERSION
+import com.azathoth.handlistserver.config.AppConfig.Companion.API_VERSION
 import com.azathoth.handlistserver.model.spacenode.SpaceNode
 import com.azathoth.handlistserver.model.spacenode.SpaceNodeService
 import org.springframework.web.bind.annotation.*

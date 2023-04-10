@@ -1,4 +1,4 @@
-package com.azathoth.handlistserver.repository
+package com.azathoth.handlistserver.model.spacenode
 
 import com.azathoth.handlistserver.model.spacenode.SpaceNode
 import org.springframework.data.repository.CrudRepository

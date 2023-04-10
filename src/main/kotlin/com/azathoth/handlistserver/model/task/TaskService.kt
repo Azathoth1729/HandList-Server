@@ -1,7 +1,6 @@
 package com.azathoth.handlistserver.model.task
 
-import com.azathoth.handlistserver.repository.SpaceNodeRepository
-import com.azathoth.handlistserver.repository.TaskRepository
+import com.azathoth.handlistserver.model.spacenode.SpaceNodeRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.HttpStatus
@@ -24,11 +23,18 @@ class TaskService(@Autowired val taskRepo: TaskRepository, @Autowired val nodeRe
         if (taskRepo.existsById(id)) taskRepo.deleteById(id)
         else throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
-    fun update(id: Long, task: Task): Task =
-        if (taskRepo.existsById(id)) {
-            task.id = id
-            taskRepo.save(task)
-        } else throw ResponseStatusException(HttpStatus.NOT_FOUND)
+    fun update(id: Long, task: Task): Task {
+        val oldTask = taskRepo.findByIdOrNull(id) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+        oldTask.name = task.name
+        oldTask.status = task.status
+        oldTask.description = task.description
+        oldTask.createTime = task.createTime
+        oldTask.startTime = task.startTime
+        oldTask.endTime = task.endTime
+        taskRepo.save(oldTask)
+        return oldTask
+    }
+
 
     fun getAllTasksBySpaceNodeId(node_id: Long) =
         if (nodeRepo.existsById(node_id)) {

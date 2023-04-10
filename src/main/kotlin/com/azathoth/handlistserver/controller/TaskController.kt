@@ -1,6 +1,6 @@
 package com.azathoth.handlistserver.controller
 
-import com.azathoth.handlistserver.AppConfig.API_VERSION
+import com.azathoth.handlistserver.config.AppConfig.Companion.API_VERSION
 import com.azathoth.handlistserver.model.task.Task
 import com.azathoth.handlistserver.model.task.TaskService
 import org.springframework.web.bind.annotation.*
@@ -31,6 +31,7 @@ class TaskController(val service: TaskService) {
     fun getAllTask(@PathVariable node_id: Long) = service.getAllTasksBySpaceNodeId(node_id)
 
     //insert a new task to a spacenode
+
     @PostMapping("/spacenodes/{node_id}/tasks")
     fun insertTask(@PathVariable node_id: Long, @RequestBody task: Task) =
         service.insertTask(node_id, task)

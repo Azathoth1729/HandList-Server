@@ -1,6 +1,5 @@
 package com.azathoth.handlistserver.model.spacenode
 
-import com.azathoth.handlistserver.repository.SpaceNodeRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.HttpStatus

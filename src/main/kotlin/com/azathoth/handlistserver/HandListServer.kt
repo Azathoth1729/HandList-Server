@@ -3,10 +3,6 @@ package com.azathoth.handlistserver
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
-object AppConfig {
-    const val API_VERSION = "v1"
-}
-
 @SpringBootApplication
 class HandListServer
 
