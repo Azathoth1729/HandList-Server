@@ -18,7 +18,7 @@ class SpaceNodeController(val service: SpaceNodeService) {
         }
 
     @GetMapping("/{node_id}")
-    fun findById(@PathVariable node_id: Long) = service.findById(node_id)
+    fun findById(@PathVariable("node_id") nodeId: Long) = service.findById(nodeId)
 
     @PostMapping
     fun insert(@RequestBody node: SpaceNode) = service.insert(node)
@@ -27,9 +27,9 @@ class SpaceNodeController(val service: SpaceNodeService) {
     fun insertAll(@RequestBody nodes: List<SpaceNode>) = service.insertAll(nodes)
 
     @DeleteMapping("/{node_id}")
-    fun delete(@PathVariable node_id: Long) = service.deleteById(node_id)
+    fun delete(@PathVariable("node_id") nodeId: Long) = service.deleteById(nodeId)
 
     @PutMapping("/{node_id}")
-    fun update(@PathVariable node_id: Long, @RequestBody node: SpaceNode) =
-        service.updateById(node_id, node)
+    fun update(@PathVariable("node_id") nodeId: Long, @RequestBody node: SpaceNode) =
+        service.updateById(nodeId, node)
 }

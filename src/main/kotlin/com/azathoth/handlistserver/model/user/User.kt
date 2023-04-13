@@ -10,12 +10,12 @@ class User(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     val id: Long = 0,
-    private val username: String,
-    private val email: String,
+    val nickname: String,
+    val email: String,
     private val password: String,
 
     @Enumerated(EnumType.STRING)
-    private val role: UserRole,
+    val role: UserRole,
 ) : UserDetails {
     override fun getAuthorities() =
         listOf(SimpleGrantedAuthority(role.toString()))

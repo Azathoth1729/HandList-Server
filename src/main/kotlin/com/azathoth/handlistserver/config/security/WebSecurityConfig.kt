@@ -23,7 +23,10 @@ class WebSecurityConfig(
             .authorizeHttpRequests()
             .requestMatchers(
                 "/api/$API_VERSION/auth/**",
-                )
+                "/api/$API_VERSION/tasks/**",
+                "/api/$API_VERSION/spacenodes/**",
+                "/api/$API_VERSION/users/**",
+            )
             .permitAll()
             .anyRequest()
             .authenticated()
