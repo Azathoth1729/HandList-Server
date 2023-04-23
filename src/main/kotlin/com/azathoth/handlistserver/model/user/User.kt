@@ -10,12 +10,12 @@ class User(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     val id: Long = 0,
-    val nickname: String,
-    val email: String,
+    var nickname: String,
+    var email: String,
     private val password: String,
 
     @Enumerated(EnumType.STRING)
-    val role: UserRole,
+    var role: UserRole,
 ) : UserDetails {
     override fun getAuthorities() =
         listOf(SimpleGrantedAuthority(role.toString()))
@@ -26,5 +26,4 @@ class User(
     override fun isAccountNonLocked(): Boolean = true
     override fun isCredentialsNonExpired(): Boolean = true
     override fun isEnabled(): Boolean = true
-
 }

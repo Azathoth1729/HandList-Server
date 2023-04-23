@@ -4,7 +4,6 @@ import com.azathoth.handlistserver.model.spacenode.SpaceNode
 import com.azathoth.handlistserver.model.user.User
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.persistence.*
 import org.hibernate.annotations.OnDelete
 import org.hibernate.annotations.OnDeleteAction
@@ -25,24 +24,17 @@ class Task(
     var status: Status = Status.Todo,
 
     var description: String = "",
-
-    @JsonProperty("create_time")
-    var createTime: LocalDate = LocalDate.now(),
-
-    @JsonProperty("start_time")
+    val createTime: LocalDate = LocalDate.now(),
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     var startTime: LocalDate? = null,
-
-    @JsonProperty("end_time")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     var endTime: LocalDate? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_node_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-//    @JsonIgnore
     @JsonIgnoreProperties(value = ["hibernateLazyInitializer", "handler"])
-    var spaceNode: SpaceNode,
+    var spaceNode: SpaceNode?,
 
     @ManyToMany(
         fetch = FetchType.LAZY,
@@ -58,7 +50,7 @@ class Task(
     )
     var assigns: MutableSet<User> = hashSetOf(),
 ) {
-    fun assign(user:User) = this.assigns.add(user)
+    fun assign(user: User) = this.assigns.add(user)
 
-    fun free(user:User) = this.assigns.remove(user)
+    fun free(user: User) = this.assigns.remove(user)
 }

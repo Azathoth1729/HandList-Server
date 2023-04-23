@@ -6,5 +6,6 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 interface UserRepository : CrudRepository<User, Long> {
     fun findByEmail(email: String): User?
-//    fun findUsersByTasksId(task_id: Long): List<User>
+
+//    fun findByIdOrNull(id: Long): User?
 }

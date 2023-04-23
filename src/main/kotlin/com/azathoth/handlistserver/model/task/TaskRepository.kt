@@ -1,6 +1,5 @@
 package com.azathoth.handlistserver.model.task
 
-import com.azathoth.handlistserver.model.task.Task
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.CrudRepository
 

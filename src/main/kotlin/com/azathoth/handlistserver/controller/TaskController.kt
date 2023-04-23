@@ -1,7 +1,7 @@
 package com.azathoth.handlistserver.controller
 
 import com.azathoth.handlistserver.config.AppConfig.Companion.API_VERSION
-import com.azathoth.handlistserver.model.task.Task
+import com.azathoth.handlistserver.model.task.TaskDTO
 import com.azathoth.handlistserver.model.task.TaskService
 import com.azathoth.handlistserver.model.user.UserRequest
 import org.springframework.web.bind.annotation.*
@@ -25,7 +25,8 @@ class TaskController(val service: TaskService) {
     fun deleteById(@PathVariable("task_id") taskId: Long) = service.deleteById(taskId)
 
     @PutMapping("/tasks/{task_id}")
-    fun update(@PathVariable("task_id") taskId: Long, @RequestBody task: Task) = service.update(taskId, task)
+    fun update(@PathVariable("task_id") taskId: Long, @RequestBody taskDTO: TaskDTO) =
+        service.update(taskId, taskDTO)
 
     // get all users of a task
     @GetMapping("/tasks/{task_id}/users")
@@ -53,8 +54,8 @@ class TaskController(val service: TaskService) {
 
     //insert a new task to a spacenode
     @PostMapping("/spacenodes/{node_id}/tasks")
-    fun insertTask(@PathVariable("node_id") nodeId: Long, @RequestBody task: Task) =
-        service.insertTask(nodeId, task)
+    fun insertTask(@PathVariable("node_id") nodeId: Long, @RequestBody taskDTO: TaskDTO) =
+        service.insertTask(nodeId, taskDTO)
 
     //delete all tasks of a spacenode
     @DeleteMapping("/spacenodes/{node_id}/tasks")
