@@ -1,9 +1,7 @@
 package com.azathoth.handlistserver.model
 
-import com.azathoth.handlistserver.model.spacenode.SpaceNode
-import com.azathoth.handlistserver.model.spacenode.SpaceNodeService
+import com.azathoth.handlistserver.spacenode.SpaceNodeService
 import com.ninjasquad.springmockk.MockkBean
-import io.mockk.every
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 
