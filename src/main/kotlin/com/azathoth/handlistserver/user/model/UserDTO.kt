@@ -1,7 +1,5 @@
 package com.azathoth.handlistserver.user.model
 
-import com.azathoth.handlistserver.user.UserRole
-
 data class UserDTO(
     val id: Long?,
     val email: String?,

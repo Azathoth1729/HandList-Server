@@ -3,7 +3,7 @@ package com.azathoth.handlistserver.user.auth
 import com.azathoth.handlistserver.security.JwtService
 import com.azathoth.handlistserver.user.model.User
 import com.azathoth.handlistserver.user.UserRepository
-import com.azathoth.handlistserver.user.UserRole
+import com.azathoth.handlistserver.user.model.UserRole
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.userdetails.UsernameNotFoundException

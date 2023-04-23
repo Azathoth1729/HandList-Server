@@ -1,6 +1,5 @@
 package com.azathoth.handlistserver.user.model
 
-import com.azathoth.handlistserver.user.UserRole
 import jakarta.persistence.*
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
