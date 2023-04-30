@@ -18,6 +18,4 @@ class AuthController(val service: AuthService) {
     @PostMapping("/authenticate")
     fun authenticate(@RequestBody request: AuthRequest) =
         service.authenticate(request)
-
-
 }
