@@ -1,13 +1,13 @@
 package com.azathoth.handlistserver.task
 
-import com.azathoth.handlistserver.spacenode.SpaceNodeRepository
+import com.azathoth.handlistserver.spacenode.SpaceNodeRepo
 import com.azathoth.handlistserver.task.model.Task
 import com.azathoth.handlistserver.task.model.TaskDTO
 import com.azathoth.handlistserver.task.model.toDTO
 import com.azathoth.handlistserver.task.model.toTask
-import com.azathoth.handlistserver.user.model.UserDTO
-import com.azathoth.handlistserver.user.UserRepository
+import com.azathoth.handlistserver.user.UserRepo
 import com.azathoth.handlistserver.user.UserRequest
+import com.azathoth.handlistserver.user.model.UserDTO
 import com.azathoth.handlistserver.user.model.toDTO
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.HttpStatus
@@ -16,11 +16,21 @@ import org.springframework.web.server.ResponseStatusException
 
 @Service
 class TaskService(
-    private val taskRepo: TaskRepository,
-    private val nodeRepo: SpaceNodeRepository,
-    private val userRepo: UserRepository,
+    private val taskRepo: TaskRepo,
+    private val nodeRepo: SpaceNodeRepo,
+    private val userRepo: UserRepo,
 ) {
     fun getAll() = taskRepo.findAll().map(Task::toDTO)
+
+    fun getAllTasksBySpaceNodeId(nodeId: Long) =
+        if (nodeRepo.existsById(nodeId)) {
+            taskRepo.findBySpaceNodeId(nodeId).map(Task::toDTO)
+        } else throw ResponseStatusException(HttpStatus.NOT_FOUND)
+
+    fun getAllUsersByTaskId(taskId: Long): List<UserDTO> {
+        val task = taskRepo.findByIdOrNull(taskId) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+        return task.assigns.map { it.toDTO() }
+    }
 
     fun findByName(name: String) = taskRepo.findByName(name).map(Task::toDTO)
 
@@ -29,9 +39,6 @@ class TaskService(
 
     fun insert(task: Task) = taskRepo.save(task).toDTO()
 
-    fun deleteById(taskId: Long) =
-        if (taskRepo.existsById(taskId)) taskRepo.deleteById(taskId)
-        else throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
     fun update(taskId: Long, taskDTO: TaskDTO): TaskDTO {
         val oldTask = taskRepo.findByIdOrNull(taskId) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
@@ -60,26 +67,21 @@ class TaskService(
             .run { this.toDTO() }
     }
 
-    fun getAllTasksBySpaceNodeId(nodeId: Long) =
-        if (nodeRepo.existsById(nodeId)) {
-            taskRepo.findBySpaceNodeId(nodeId).map(Task::toDTO)
-        } else throw ResponseStatusException(HttpStatus.NOT_FOUND)
-
     fun insertTask(nodeId: Long, taskDTO: TaskDTO) =
         nodeRepo.findByIdOrNull(nodeId)?.let {
             taskDTO.spaceNode = it
             insert(taskDTO.toTask(userRepo))
         }
 
+    fun deleteById(taskId: Long) =
+        if (taskRepo.existsById(taskId)) taskRepo.deleteById(taskId)
+        else throw ResponseStatusException(HttpStatus.NOT_FOUND)
+
     fun deleteAllTasksBySpaceNodeId(nodeId: Long) =
         if (nodeRepo.existsById(nodeId)) {
             taskRepo.deleteBySpaceNodeId(nodeId)
         } else throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
-    fun getAllUsers(taskId: Long): List<UserDTO> {
-        val task = taskRepo.findByIdOrNull(taskId) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
-        return task.assigns.map { it.toDTO() }
-    }
 
     fun assignUser(taskId: Long, userRequest: UserRequest): TaskDTO? {
         val task = taskRepo.findByIdOrNull(taskId) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
@@ -96,5 +98,4 @@ class TaskService(
         return if (ifFreed) taskRepo.save(task).toDTO() else null
     }
 
-    fun getAllTasksByUserEmail(email: String) = taskRepo.findByAssignsEmail(email).map(Task::toDTO)
 }

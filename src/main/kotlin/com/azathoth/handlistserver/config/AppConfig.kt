@@ -1,5 +1,6 @@
 package com.azathoth.handlistserver.config
 
+import com.azathoth.handlistserver.user.UserRepo
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -11,10 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 
-import com.azathoth.handlistserver.user.UserRepository
-
 @Configuration
-class AppConfig(private val userRepo: UserRepository) {
+class AppConfig(private val userRepo: UserRepo) {
     companion object {
         const val API_VERSION = "v1"
     }

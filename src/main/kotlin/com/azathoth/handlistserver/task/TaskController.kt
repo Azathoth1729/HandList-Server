@@ -29,8 +29,8 @@ class TaskController(val service: TaskService) {
 
     // get all users of a task
     @GetMapping("/tasks/{task_id}/users")
-    fun getAllUsers(@PathVariable("task_id") taskId: Long) =
-        service.getAllUsers(taskId)
+    fun getAllUsersByTaskId(@PathVariable("task_id") taskId: Long) =
+        service.getAllUsersByTaskId(taskId)
 
     // assign a user to a task
     @PostMapping("/tasks/{task_id}/users")
@@ -41,11 +41,6 @@ class TaskController(val service: TaskService) {
     @DeleteMapping("/tasks/{task_id}/users")
     fun freeUser(@PathVariable("task_id") taskId: Long, @RequestBody userRequest: UserRequest) =
         service.freeUser(taskId, userRequest)
-
-    // get all tasks assigned to a user
-    @GetMapping("/users/{user_email}/tasks")
-    fun getAllTasksByUserEmail(@PathVariable("user_email") email: String) =
-        service.getAllTasksByUserEmail(email)
 
     // get all tasks from a spacenode
     @GetMapping("/spacenodes/{node_id}/tasks")

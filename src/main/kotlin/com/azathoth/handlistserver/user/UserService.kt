@@ -1,5 +1,7 @@
 package com.azathoth.handlistserver.user
 
+import com.azathoth.handlistserver.task.TaskRepo
+import com.azathoth.handlistserver.task.model.toDTO
 import com.azathoth.handlistserver.user.model.User
 import com.azathoth.handlistserver.user.model.UserDTO
 import com.azathoth.handlistserver.user.model.toDTO
@@ -12,11 +14,17 @@ import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 
 @Service
-class UserService(val userRepo: UserRepository) : UserDetailsService {
+class UserService(
+    private val userRepo: UserRepo,
+    private val taskRepo: TaskRepo
+) : UserDetailsService {
     override fun loadUserByUsername(email: String): UserDetails =
         userRepo.findByEmail(email) ?: throw UsernameNotFoundException("$email not found")
 
-    fun getAll() = userRepo.findAll().map(User::toDTO)
+    fun getAll() = userRepo.findAll().map { it.toDTO() }
+
+    fun getAllTasksByUserEmail(email: String) = taskRepo.findByAssignsEmail(email).map { it.toDTO() }
+
 
     fun update(userId: Long, user: UserDTO): User {
         val oldUser = userRepo.findByIdOrNull(userId) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 
 @Service
-class SpaceNodeService(@Autowired val repo: SpaceNodeRepository) {
+class SpaceNodeService(@Autowired val repo: SpaceNodeRepo) {
 
     fun getAll() = repo.findAll()
 

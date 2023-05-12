@@ -1,9 +1,9 @@
 package com.azathoth.handlistserver.task.model
 
 import com.azathoth.handlistserver.spacenode.model.SpaceNode
+import com.azathoth.handlistserver.user.UserRepo
 import com.azathoth.handlistserver.user.model.User
 import com.azathoth.handlistserver.user.model.UserDTO
-import com.azathoth.handlistserver.user.UserRepository
 import com.azathoth.handlistserver.user.model.toDTO
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import org.springframework.http.HttpStatus
@@ -35,7 +35,7 @@ fun Task.toDTO(): TaskDTO = TaskDTO(
     assigns = this.assigns.map(User::toDTO)
 )
 
-fun TaskDTO.toTask(userRepo: UserRepository) = Task(
+fun TaskDTO.toTask(userRepo: UserRepo) = Task(
     id = this.id,
     name = this.name,
     status = this.status,

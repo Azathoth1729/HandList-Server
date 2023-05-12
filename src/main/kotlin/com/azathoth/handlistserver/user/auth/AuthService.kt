@@ -1,8 +1,8 @@
 package com.azathoth.handlistserver.user.auth
 
 import com.azathoth.handlistserver.security.JwtService
+import com.azathoth.handlistserver.user.UserRepo
 import com.azathoth.handlistserver.user.model.User
-import com.azathoth.handlistserver.user.UserRepository
 import com.azathoth.handlistserver.user.model.UserRole
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class AuthService(
-    private val userRepo: UserRepository,
+    private val userRepo: UserRepo,
     private val passwordEncoder: PasswordEncoder,
     private val jwtService: JwtService,
     private val authenticationManager: AuthenticationManager
