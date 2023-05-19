@@ -23,8 +23,10 @@ class UserService(
 
     fun getAll() = userRepo.findAll().map { it.toDTO() }
 
-    fun getAllTasksByUserEmail(email: String) = taskRepo.findByAssignsEmail(email).map { it.toDTO() }
+    fun getTasksByUserEmail(email: String) = taskRepo.findByAssignsEmail(email).map { it.toDTO() }
 
+    fun findUserByEmail(email: String) =
+        userRepo.findByEmail(email)?.toDTO() ?: throw UsernameNotFoundException("$email not found")
 
     fun update(userId: Long, user: UserDTO): User {
         val oldUser = userRepo.findByIdOrNull(userId) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)

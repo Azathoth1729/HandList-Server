@@ -4,7 +4,7 @@ import jakarta.persistence.*
 
 
 @Entity(name = "spaceNode")
-class SpaceNode(
+data class SpaceNode(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

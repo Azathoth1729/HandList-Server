@@ -7,6 +7,4 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 interface UserRepo : CrudRepository<User, Long> {
     fun findByEmail(email: String): User?
-
-//    fun findByIdOrNull(id: Long): User?
 }

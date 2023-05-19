@@ -1,6 +1,9 @@
-package com.azathoth.handlistserver.user.auth
+package com.azathoth.handlistserver.user.controller
 
 import com.azathoth.handlistserver.config.AppConfig.Companion.API_VERSION
+import com.azathoth.handlistserver.user.auth.AuthRequest
+import com.azathoth.handlistserver.user.auth.AuthService
+import com.azathoth.handlistserver.user.auth.RegisterRequest
 import org.springframework.web.bind.annotation.*
 
 @RestController

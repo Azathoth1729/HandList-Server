@@ -7,7 +7,10 @@ This is the server side(backend) of [HandList](https://github.com/Azathoth1729/H
 
 ### Requirements
 
-Jetbrains IDEA
++ JDK version >= 17
++ docker
++ docker-compose
++ Jetbrains IDEA
 
 ### Step 1
 
@@ -46,4 +49,4 @@ CREATE DATABASE handlistdb;
 
 ### Step 3
 
-使用IDEA运行
+使用 IDEA build并运行

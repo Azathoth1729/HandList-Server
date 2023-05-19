@@ -26,6 +26,7 @@ class WebSecurityConfig(
                 "/api/$API_VERSION/tasks/**",
                 "/api/$API_VERSION/spacenodes/**",
                 "/api/$API_VERSION/users/**",
+                "/api/$API_VERSION/posts/**",
             )
             .permitAll()
             .anyRequest()

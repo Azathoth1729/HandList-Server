@@ -10,7 +10,7 @@ import org.hibernate.annotations.OnDeleteAction
 import java.time.LocalDate
 
 @Entity(name = "reply")
-class Reply(
+data class Reply(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -34,6 +34,4 @@ class Reply(
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnoreProperties(value = ["hibernateLazyInitializer", "handler"])
     val post: Post
-
-
 )

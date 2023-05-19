@@ -9,6 +9,7 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
+import java.time.LocalDate
 
 @Service
 class PostService(
@@ -26,8 +27,8 @@ class PostService(
             Post(
                 title = postDTO.title ?: "",
                 content = postDTO.content ?: "",
-                createTime = postDTO.createTime!!,
-                lastModifiedTime = postDTO.lastModifiedTime!!,
+                createTime = postDTO.createTime ?: LocalDate.now(),
+                lastModifiedTime = postDTO.lastModifiedTime ?: LocalDate.now(),
                 user = userRepo.findByEmail(email) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND),
                 replies = HashSet(),
                 tags = postDTO.tags?.map { replyDTO ->
@@ -36,7 +37,7 @@ class PostService(
                     } ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
                 }?.toMutableSet() ?: HashSet(),
             )
-        )
+        ).toDTO()
 
 
     fun update(postId: Long, postDTO: PostDTO): PostDTO {
@@ -61,7 +62,7 @@ class PostService(
                     postTagRepo.findByIdOrNull(it)
                 } ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
             }?.toMutableSet()?.let { tags = it }
-        }.run { this.toDTO() }
+        }.toDTO()
     }
 
 

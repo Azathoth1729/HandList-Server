@@ -20,14 +20,14 @@ class TaskService(
     private val nodeRepo: SpaceNodeRepo,
     private val userRepo: UserRepo,
 ) {
-    fun getAll() = taskRepo.findAll().map(Task::toDTO)
+    fun findAllTasks() = taskRepo.findAll().map(Task::toDTO)
 
-    fun getAllTasksBySpaceNodeId(nodeId: Long) =
+    fun findAllTasksBySpaceNodeId(nodeId: Long) =
         if (nodeRepo.existsById(nodeId)) {
             taskRepo.findBySpaceNodeId(nodeId).map(Task::toDTO)
         } else throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
-    fun getAllUsersByTaskId(taskId: Long): List<UserDTO> {
+    fun findAllUsersByTaskId(taskId: Long): List<UserDTO> {
         val task = taskRepo.findByIdOrNull(taskId) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
         return task.assigns.map { it.toDTO() }
     }
@@ -38,7 +38,6 @@ class TaskService(
         taskRepo.findByIdOrNull(taskId)?.toDTO() ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
     fun insert(task: Task) = taskRepo.save(task).toDTO()
-
 
     fun update(taskId: Long, taskDTO: TaskDTO): TaskDTO {
         val oldTask = taskRepo.findByIdOrNull(taskId) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
@@ -63,8 +62,7 @@ class TaskService(
                 }
 
                 taskRepo.save(oldTask)
-            }
-            .run { this.toDTO() }
+            }.toDTO()
     }
 
     fun insertTask(nodeId: Long, taskDTO: TaskDTO) =
@@ -77,11 +75,10 @@ class TaskService(
         if (taskRepo.existsById(taskId)) taskRepo.deleteById(taskId)
         else throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
-    fun deleteAllTasksBySpaceNodeId(nodeId: Long) =
+    fun deleteTasksBySpaceNodeId(nodeId: Long) =
         if (nodeRepo.existsById(nodeId)) {
-            taskRepo.deleteBySpaceNodeId(nodeId)
+            taskRepo.deleteTasksBySpaceNodeId(nodeId)
         } else throw ResponseStatusException(HttpStatus.NOT_FOUND)
-
 
     fun assignUser(taskId: Long, userRequest: UserRequest): TaskDTO? {
         val task = taskRepo.findByIdOrNull(taskId) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)

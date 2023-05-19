@@ -11,7 +11,7 @@ import org.hibernate.annotations.OnDeleteAction
 import java.time.LocalDate
 
 @Entity(name = "post")
-class Post(
+data class Post(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -33,7 +33,7 @@ class Post(
 
     @OneToMany(
         mappedBy = "post", fetch = FetchType.LAZY,
-        cascade = [CascadeType.ALL]
+        cascade = [CascadeType.MERGE, CascadeType.REMOVE]
     )
     var replies: MutableSet<Reply> = HashSet(),
 

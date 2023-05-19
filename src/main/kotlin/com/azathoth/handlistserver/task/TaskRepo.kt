@@ -9,6 +9,7 @@ interface TaskRepo : CrudRepository<Task, Long> {
     fun findBySpaceNodeId(nodeId: Long): Set<Task>
     fun findByAssignsEmail(email: String): Set<Task>
     fun findByAssignsId(id: Long): Set<Task>
+
     @Transactional
-    fun deleteBySpaceNodeId(nodeId: Long): Long
+    fun deleteTasksBySpaceNodeId(nodeId: Long): Long
 }

@@ -12,7 +12,7 @@ class TaskController(val service: TaskService) {
     @GetMapping("/tasks")
     fun getAll(@RequestParam name: String?) =
         if (name == null) {
-            service.getAll()
+            service.findAllTasks()
         } else {
             service.findByName(name)
         }
@@ -30,7 +30,7 @@ class TaskController(val service: TaskService) {
     // get all users of a task
     @GetMapping("/tasks/{task_id}/users")
     fun getAllUsersByTaskId(@PathVariable("task_id") taskId: Long) =
-        service.getAllUsersByTaskId(taskId)
+        service.findAllUsersByTaskId(taskId)
 
     // assign a user to a task
     @PostMapping("/tasks/{task_id}/users")
@@ -44,7 +44,7 @@ class TaskController(val service: TaskService) {
 
     // get all tasks from a spacenode
     @GetMapping("/spacenodes/{node_id}/tasks")
-    fun getAllTasksBySpaceNodeId(@PathVariable("node_id") nodeId: Long) = service.getAllTasksBySpaceNodeId(nodeId)
+    fun getAllTasksBySpaceNodeId(@PathVariable("node_id") nodeId: Long) = service.findAllTasksBySpaceNodeId(nodeId)
 
     //insert a new task to a spacenode
     @PostMapping("/spacenodes/{node_id}/tasks")
@@ -54,5 +54,5 @@ class TaskController(val service: TaskService) {
     //delete all tasks of a spacenode
     @DeleteMapping("/spacenodes/{node_id}/tasks")
     fun deleteAllTask(@PathVariable("node_id") nodeId: Long) =
-        service.deleteAllTasksBySpaceNodeId(nodeId)
+        service.deleteTasksBySpaceNodeId(nodeId)
 }

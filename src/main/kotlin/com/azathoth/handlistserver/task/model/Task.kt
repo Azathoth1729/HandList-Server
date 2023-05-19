@@ -11,7 +11,7 @@ import java.time.LocalDate
 
 
 @Entity(name = "task")
-class Task(
+data class Task(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -36,13 +36,7 @@ class Task(
     @JsonIgnoreProperties(value = ["hibernateLazyInitializer", "handler"])
     var spaceNode: SpaceNode?,
 
-    @ManyToMany(
-        fetch = FetchType.LAZY,
-        cascade = [
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-        ]
-    )
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "task_user",
         joinColumns = [JoinColumn(name = "task_id")],
